@@ -57,6 +57,7 @@ input = ARGV
 
 # contact_list.get_user_input(input)
 
-puts Contact.create('Willemina', 'wstikk@gmail.com')
+# puts Contact.create('Willemina', 'wstikk@gmail.com')
 
 
+p Contact.find(3)

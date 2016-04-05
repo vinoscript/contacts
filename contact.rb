@@ -36,7 +36,7 @@ class Contact
        #  Contact.new(row[0], row[1])
        # end
        # @@contacts
-       i=1
+      i=1
       CSV.foreach(FILE) do |row|
         Contact.new(row[0], row[1], i)
         i+=1
@@ -51,7 +51,7 @@ class Contact
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
       @@contacts = []
       @@contacts = Contact.all
-      
+
       len = @@contacts.length
       puts "Lenght of contacts array is #{len}"
       CSV.open(FILE, 'ab') do |csv|
@@ -65,7 +65,13 @@ class Contact
     # @return [Contact, nil] the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
       # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
-      
+      @@contacts.select do |contact|
+        if contact.id == id
+          return contact
+        else
+          nil
+        end
+      end
     end
     
     # Search for contacts by either name or email.
