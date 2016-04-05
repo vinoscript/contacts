@@ -1,16 +1,28 @@
 require 'csv'
+FILE = 'contacts.csv'
+
+# puts contacts
 
 # Represents a person in an address book.
 # The ContactList class will work with Contact objects instead of interacting with the CSV file directly
 class Contact
 
-  attr_accessor :name, :email
+  @@contacts = []
+  attr_accessor :name, :email, :id
   
   # Creates a new contact object
   # @param name [String] The contact's name
   # @param email [String] The contact's email address
   def initialize(name, email)
     # TODO: Assign parameter values to instance variables.
+    @name = name
+    @email = email
+    @id = File.open(FILE).readlines.length + 1
+    @@contacts << self
+  end
+
+  def to_s
+    "#{name}, #{email}, #{id}"
   end
 
   # Provides functionality for managing contacts in the csv file.
@@ -20,6 +32,9 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects
     def all
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
+       CSV.map(FILE) do |row|
+        Contact.new(row[0], row[1])
+       end
     end
 
     # Creates a new contact, adding it to the csv file, returning the new contact.
@@ -27,6 +42,10 @@ class Contact
     # @param email [String] the contact's email
     def create(name, email)
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
+      CSV.open(FILE, 'a') do |csv|
+        csv << [name, email]
+      end
+      Contact.new(name,email)
     end
     
     # Find the Contact in the 'contacts.csv' file with the matching id.
@@ -46,3 +65,7 @@ class Contact
   end
 
 end
+
+
+
+
