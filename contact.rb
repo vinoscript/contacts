@@ -74,7 +74,7 @@ class Contact
     def search(term)
       # TODO: Select the Contact instances from the 'contacts.csv' file whose name or email attributes contain the search term.
       @@contacts.select do |contact|
-        if contact.name.match(term) || contact.email.match(term)
+        if contact.name.downcase.match(term) || contact.email.downcase.match(term)
           contact
         else
           nil

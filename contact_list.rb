@@ -27,10 +27,15 @@ class ContactList
       puts Contact.create(input[1], input[2])
     when 'list'
       puts "you choose list"
+      puts Contact.all
     when 'show'
-      puts "you choose show"
+      puts "you choose show by ID"
+      Contact.all
+      p Contact.find(input[1].to_i)
     when 'search'
       puts "you choose search"
+      Contact.all
+      p Contact.search(input[1])
     else 
       display_menu
       # choice = gets.chomp
@@ -49,16 +54,15 @@ end
 # mycontacts.display_menu
 
 # # ContactList.display_menu
-# contact_list = ContactList.new
+contact_list = ContactList.new
 # contact_list.get_user_input
-puts Contact.all
+# puts Contact.all
 
 input = ARGV
-
-# contact_list.get_user_input(input)
+contact_list.get_user_input(input)
 
 # puts Contact.create('Willemina', 'wstikk@gmail.com')
 
 
 # p Contact.find(3)
-p Contact.search('illemi')
+# p Contact.search('illemi')
