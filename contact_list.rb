@@ -6,12 +6,7 @@ class ContactList
 
   # TODO: Implement user interaction. This should be the only file where you use `puts` and `gets`.
   def initialize
-    # here you should go through CSV and create new instances of contacts
-    # Contact.new(name, email)
-    # contacts = CSV.read(file_name)
-    # CSV.foreach(file_name) do |row|
-    #   Contact.new(row[0], row[1], row[2])
-    # end
+
   end
 
   def display_menu
@@ -38,6 +33,8 @@ class ContactList
       puts "you choose search"
     else 
       display_menu
+      # choice = gets.chomp
+      # get_user_input(choice)
     end
   end
 
@@ -51,10 +48,10 @@ end
 # mycontacts = ContactList.new
 # mycontacts.display_menu
 
-# ContactList.display_menu
-contact_list = ContactList.new
+# # ContactList.display_menu
+# contact_list = ContactList.new
 # contact_list.get_user_input
-# puts Contact.all
+puts Contact.all
 
 input = ARGV
 
