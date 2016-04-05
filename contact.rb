@@ -1,8 +1,6 @@
 require 'csv'
 FILE = 'contacts.csv'
 
-# puts contacts
-
 # Represents a person in an address book.
 # The ContactList class will work with Contact objects instead of interacting with the CSV file directly
 class Contact
@@ -32,10 +30,6 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects
     def all
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
-       # CSV.open(FILE) do |row|
-       #  Contact.new(row[0], row[1])
-       # end
-       # @@contacts
       i=1
       CSV.foreach(FILE) do |row|
         Contact.new(row[0], row[1], i)
@@ -53,7 +47,7 @@ class Contact
       @@contacts = Contact.all
 
       len = @@contacts.length
-      puts "Lenght of contacts array is #{len}"
+      puts "Length of contacts array is #{len}"
       CSV.open(FILE, 'ab') do |csv|
         csv << [name, email]
       end
@@ -79,6 +73,13 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects.
     def search(term)
       # TODO: Select the Contact instances from the 'contacts.csv' file whose name or email attributes contain the search term.
+      @@contacts.select do |contact|
+        if contact.name.match(term) || contact.email.match(term)
+          contact
+        else
+          nil
+        end
+      end
     end
 
   end

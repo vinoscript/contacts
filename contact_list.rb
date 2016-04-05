@@ -60,4 +60,5 @@ input = ARGV
 # puts Contact.create('Willemina', 'wstikk@gmail.com')
 
 
-p Contact.find(3)
+# p Contact.find(3)
+p Contact.search('illemi')
