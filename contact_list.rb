@@ -17,6 +17,11 @@ class ContactList
     puts "\t search - Search contacts"
   end
 
+  # def display_new(input)
+  #   puts "You choose new"
+  #   puts Contact.create(input[1], input[2])
+  # end
+
   def get_user_input(input) 
     # case statement
     # puts Contact.all
@@ -27,15 +32,16 @@ class ContactList
       puts Contact.create(input[1], input[2])
     when 'list'
       puts "you choose list"
-      puts Contact.all
+      puts contact_array = Contact.all
+      puts "Total contacts: #{contact_array.length}"
     when 'show'
       puts "you choose show by ID"
-      Contact.all
-      p Contact.find(input[1].to_i)
+      # Contact.all
+      puts Contact.find(input[1].to_i)
     when 'search'
       puts "you choose search"
-      Contact.all
-      p Contact.search(input[1])
+      # Contact.all
+      p Contact.search(input[1].downcase)
     else 
       display_menu
       # choice = gets.chomp
