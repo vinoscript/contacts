@@ -14,7 +14,7 @@ class Contact
   end
 
   def save
-  @@conn.exec_params("INSERT INTO contacts (name, email) VALUES ($1, $2)", [@name, @email])
+    @@conn.exec_params("INSERT INTO contacts (name, email) VALUES ($1, $2)", [@name, @email])
   end
 
   class << self
@@ -41,19 +41,23 @@ class Contact
     end
     
 
-    # def find(id)
-    #   Contact.all.select do |contact|
-    #     contact.id == id
-    #   end
-    # end
+    def find(id)
+      result = @@conn.exec_params("SELECT * FROM contacts WHERE id = $1::int", [id])
+      result.to_a
+    end
     
 
-    # def search(term)
-    #   # TODO: Select the Contact instances from the 'contacts.csv' file whose name or email attributes contain the search term.
-    #   Contact.all.select do |contact|
-    #     contact.name.downcase.match(term) || contact.email.downcase.match(term)
-    #   end
-    # end
+    def search(term)
+      result = @@conn.exec_params("SELECT DISTINCT * FROM contacts WHERE name LIKE $1 OR email LIKE $1", ["%"+term+"%"])
+      contacts = []
+      result.each_row do |row|
+        id = row[0]
+        name = row[1]
+        email = row[2]
+        contacts << Contact.new(id, name, email)
+      end
+      contacts
+    end
 
   end
 
