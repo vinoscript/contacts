@@ -2,6 +2,7 @@ require 'pg'
 require 'pry'
 require_relative './contact'
 require 'colorize'
+
 puts "Welcome to the Contact List App"
 
 conn = PG::Connection.new(dbname: 'contacts', host: 'localhost', user: 'development', password: 'development')
@@ -13,6 +14,7 @@ puts "    list    (show all contacts)"
 puts "    new     (create a new contact)"
 puts "    find    (find a contact by ID#)"
 puts "    search  (search by name or email)"
+puts "    update  (update contact)"
 puts "***************************************"
 
 command = gets.chomp
@@ -37,8 +39,8 @@ when "new"
 when "find"
   puts "Enter the ID# of the contact you want to find: "
   id = gets.chomp.to_i
-  result = Contact.find(id)[0]
-  puts "Result of find = ID#: #{result['id']} Name: #{result['name']} Email: #{result['email']}"
+  result = Contact.find(id)
+  puts "Result of find = #{result}"
 
 when "search"
   puts "Enter the name or email you want to search for: "
@@ -47,6 +49,21 @@ when "search"
   contacts.each do |contact|
     puts "ID# #{contact.id} Name: #{contact.name} Email: #{contact.email}"
   end
+
+when "update"
+  puts "Enter the ID# of the contact to update: "
+  id = gets.chomp.to_i
+  result = Contact.find(id)
+  puts "Contact to be updated = #{result}"
+  puts "Enter the new name: "
+  new_name = gets.chomp
+  puts "Enter the new email: "
+  new_email = gets.chomp
+  the_contact = result
+  the_contact.name = new_name
+  the_contact.email = new_email
+  the_contact.save
+  puts "Contact was updated"
 
 else
   puts "Invalid command, program exiting"
