@@ -11,11 +11,10 @@ class Contact
     @email = email
   end
 
-  def delete
+  def destroy
     @@conn.exec("DELETE from contacts where id=#{@id};")
   end
 
-  #if contact is in db already, update. Else, insert. 
   def save 
     if @id 
       @@conn.exec_params("UPDATE contacts SET name = $1, email = $2 WHERE id = $3::int;", [@name, @email, @id])
@@ -63,13 +62,10 @@ class Contact
     
 
     def search(term)
-      p result = @@conn.exec_params("SELECT DISTINCT * FROM contacts WHERE name LIKE $1 OR email LIKE $1;", ["%"+term+"%"])
+      result = @@conn.exec_params("SELECT DISTINCT * FROM contacts WHERE name LIKE $1 OR email LIKE $1;", ["%"+term+"%"])
       contacts = []
-      result.each_row do |row|
-        id = row[0]
-        name = row[1]
-        email = row[2]
-        contacts << Contact.new(id, name, email)
+      result.each do |row|
+        contacts << hash_to_contact(row)
       end
       contacts
     end
