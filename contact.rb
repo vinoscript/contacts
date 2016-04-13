@@ -1,5 +1,5 @@
 
-class Contact
+class Contact 
 
   attr_accessor :name, :email
   attr_reader :id

@@ -1,14 +1,23 @@
-require 'pg'
-require 'pry'
-# require 'active_record'
-require_relative './contact'
-require_relative './setup'
-require 'colorize'
+require 'active_record'
+require_relative 'contact2'
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+puts 'Establishing connection to database ...'
+ActiveRecord::Base.establish_connection(
+  adapter: 'postgresql',
+  database: 'contacts',
+  username: 'development',
+  password: 'development',
+  host: 'localhost',
+  port: 5432,
+  pool: 5,
+  encoding: 'unicode',
+  min_messages: 'error'
+)
+puts 'CONNECTED'
 
 puts "Welcome to the Contact List App"
-
-conn = PG::Connection.new(dbname: 'contacts', host: 'localhost', user: 'development', password: 'development')
-Contact.set_connection(conn)
 
 input = ARGV
 
@@ -86,3 +95,4 @@ else
   puts "Invalid command, program exiting"
 
 end
+
